@@ -1,0 +1,66 @@
+---
+# YAML documents begin with the document separator ---
+
+# The minus in YAML this indicates a list item.  The playbook contains a list
+# of plays, with each play being a dictionary
+-
+  # Hosts: where our play will run and options it will run with
+ hosts: all
+  # Tasks: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+ tasks:
+   - name: Make facts Dir
+     file:
+       path: /home/ansible/facts.d/
+       recurse: yes
+       state: directory
+       owner: ansible
+       mode: '755'
+     notify: Created dir
+   - name: Crate Nikos folder
+     file:
+       path: /home/ansible/nikos/test/
+       state: directory
+       owner: ansible
+       mode: '777'
+   - name: copy Fact 1
+     copy:
+       src: ../templates/getdate1.fact
+       dest: /home/ansible/facts.d/getdate1.fact
+       owner: ansible
+       mode: '755'
+   - name: Copy Fact 2
+     copy:
+       src: ./getdate2.fact
+       dest: /home/ansible/nikos/test/getdata2.fact
+       owner: ansible
+       mode: '777'
+   - name: Reload facts
+     setup:
+       fact_path: /home/ansible/facts.d
+   - name: Show IPv4 address
+     debug:
+       msg: "{{ ansible_default_ipv4.address }}"
+   - name: Remote server date and time
+     debug:
+      msg: "{{ansible_date_time}}"
+   - name: Retrieve the distribution name
+     debug:
+       msg: "{{ansible_distribution}}"
+   - name: Python version
+     debug:
+       msg: "{{ ansible_python_version}}"
+ # Handlers: the list of handlers that are executed as a notify key from a task
+
+ handlers:
+   - name: Created dir
+     debug:
+       msg: The folder facts.d created successfully
+
+# Three dots indicate the end of a YAML document       
+...
+~                                                                                                                                                                   
+~                                                                                                                                                                   
+~                                                                                                                                                                   
+~                                                                                                                                                                   
+~                            
