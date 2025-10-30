@@ -1,6 +1,6 @@
 ---
 # YAML documents begin with the document separator ---
-# Created by Nikos on 06/2024
+# Created by Nikos on 10/2025
 # This playbook demonstrates the use of custom facts in Ansible
 # The minus in YAML this indicates a list item.  The playbook contains a list
 # of plays, with each play being a dictionary
