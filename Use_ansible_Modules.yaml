@@ -1,0 +1,31 @@
+- name: Copy files in centos
+  hosts: centos
+  user: ansible
+  tasks:
+    - name: Copy the nikos.txt file to the target tmp folder
+      copy:
+        src: nikos.txt
+        dest: /tmp/nikos.txt
+    - name: Install the httpd package
+      yum:
+        name: httpd
+        state: latest
+    - name: Start the httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+- name: install httpd on ubuntu
+  hosts: ubuntu
+  user: ansible
+  tasks:
+    - name: Install the apache2 package
+      apt:
+        update_cache: yes
+        name: apache2
+        state: latest
+    - name: Start the apache2 service
+      service:
+        name: apache2
+        state: started
+        enabled: true
