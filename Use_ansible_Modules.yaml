@@ -1,31 +1,45 @@
+---
 - name: Copy files in centos
   hosts: centos
-  user: ansible
+
+  vars:
+    centos_server_name: httpd
+    username: ansible
   tasks:
+    - debug:
+        msg: "This is executed on the {{ centos_server_name }} server"
+    - debug:
+        var: username
     - name: Copy the nikos.txt file to the target tmp folder
       copy:
         src: nikos.txt
         dest: /tmp/nikos.txt
     - name: Install the httpd package
       yum:
-        name: httpd
+        name: "{{ centos_server_name }}"
         state: latest
     - name: Start the httpd service
       service:
-        name: httpd
+        name: "{{ centos_server_name }}"
         state: started
         enabled: true
 - name: install httpd on ubuntu
   hosts: ubuntu
-  user: ansible
+  vars:
+    ubuntu_server_name: apache2
+    username: ansible
   tasks:
+    - debug:
+        msg: "This is executed on the {{ ubuntu_server_name }} server"
+    - debug:
+        var: username
     - name: Install the apache2 package
       apt:
         update_cache: yes
-        name: apache2
+        name: "{{ ubuntu_server_name }}"
         state: latest
     - name: Start the apache2 service
       service:
-        name: apache2
+        name: "{{ ubuntu_server_name }}"
         state: started
         enabled: true
