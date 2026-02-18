@@ -1,0 +1,31 @@
+---
+- name: Install packages on centos
+  hosts: centos
+  become: true
+  tasks:
+    - name: Install the package
+      yum:
+        name: "{{ item }}"
+        state: latest
+      when: ansible_facts['distribution'] == 'CentOS'
+      loop:
+        - httpd
+        - git
+        - vim
+        - wget
+
+##################################
+- name: Install packages on ubuntu
+  hosts: ubuntu
+  tasks:
+    - name: Install the apache2 package
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      when: ansible_facts['distribution'] == 'Ubuntu'
+      loop:
+        - apache2
+        - git
+        - vim
+        - wget
