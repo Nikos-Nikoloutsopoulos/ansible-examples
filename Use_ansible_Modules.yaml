@@ -18,6 +18,10 @@
       yum:
         name: "{{ centos_server_name }}"
         state: latest
+      register: httpd_install
+    - debug:
+        var: httpd_install
+
     - name: Start the httpd service
       service:
         name: "{{ centos_server_name }}"
@@ -38,6 +42,10 @@
         update_cache: yes
         name: "{{ ubuntu_server_name }}"
         state: latest
+      register: apache2_install
+    - debug:
+        var: apache2_install
+
     - name: Start the apache2 service
       service:
         name: "{{ ubuntu_server_name }}"
